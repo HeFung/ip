@@ -1,9 +1,9 @@
-name: Area DNS
+name: IP DNS
 
 on:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
   schedule:
     - cron: '*/10 * * * *'
 
@@ -23,9 +23,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests
 
-    - name: Run script
+    - name: Run python 
       env:
         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
       run: |
-        python .github/workflows/area.py
+        python src/area.py
+        python src/bestcf.py
+        python src/bestproxy.py
+        python src/onecf.py
+        python src/reset.py
